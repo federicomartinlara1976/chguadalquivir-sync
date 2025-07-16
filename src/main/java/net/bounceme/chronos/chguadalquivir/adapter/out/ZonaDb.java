@@ -41,7 +41,7 @@ public class ZonaDb implements ZonaPort {
 	public List<ZonaDTO> listAll() {
 		List<Zona> zonas = repository.findAll();
 		return CollectionUtils.isNotEmpty(zonas) ? zonas.stream()
-				.map(zona -> modelMapper.map(zona, ZonaDTO.class)).collect(Collectors.toList())
+				.map(zona -> modelMapper.map(zona, ZonaDTO.class)).toList()
 				: Collections.emptyList();
 	}
 

@@ -3,11 +3,9 @@ package net.bounceme.chronos.chguadalquivir.adapter.out;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +22,14 @@ import net.bounceme.chronos.dto.chguadalquivir.EmbalseDTO;
 @Slf4j
 public class EmbalseDb implements EmbalsePort {
 
-	@Autowired
 	private EmbalseRepository repository;
 
-	@Autowired
 	private ModelMapper modelMapper;
+
+	public EmbalseDb(EmbalseRepository repository, ModelMapper modelMapper) {
+		this.repository = repository;
+		this.modelMapper = modelMapper;
+	}
 
 	/**
 	 *
@@ -38,7 +39,7 @@ public class EmbalseDb implements EmbalsePort {
 	public List<EmbalseDTO> listAll() {
 		List<Embalse> embalses = repository.findAll();
 		return CollectionUtils.isNotEmpty(embalses) ? embalses.stream()
-				.map(embalse -> modelMapper.map(embalse, EmbalseDTO.class)).collect(Collectors.toList())
+				.map(embalse -> modelMapper.map(embalse, EmbalseDTO.class)).toList()
 				: Collections.emptyList();
 	}
 

@@ -27,7 +27,7 @@ public class Embalse implements Serializable {
 	private String codigo;
 
 	@Column(name = "embalse")
-	private String embalse;
+	private String nombreEmbalse;
 	
 	@Column(name = "capacidad")
 	private Float capacidad;

@@ -1,7 +1,6 @@
 package net.bounceme.chronos.chguadalquivir.adapter.in;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,11 +23,14 @@ import net.bounceme.chronos.dto.chguadalquivir.ZonaDTO;
 @Service
 public class RabbitMessageAdapter implements MessagePort {
 
-	@Autowired
 	private ServicioFacade servicioFacade;
 
-	@Autowired
 	private ObjectMapper objectMapper;
+	
+	public RabbitMessageAdapter(ServicioFacade servicioFacade, ObjectMapper objectMapper) {
+		this.servicioFacade = servicioFacade;
+		this.objectMapper = objectMapper;
+	}
 
 	/**
 	 * El método receptor

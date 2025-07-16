@@ -3,11 +3,9 @@ package net.bounceme.chronos.chguadalquivir.adapter.out;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +22,15 @@ import net.bounceme.chronos.dto.chguadalquivir.RegistroDiarioDTO;
 @Slf4j
 public class RegistroDiarioDb implements RegistroDiarioPort {
 	
-	@Autowired
 	private RegistroDiarioRepository repository;
 	
-	@Autowired
 	private ModelMapper modelMapper;
 	
+	public RegistroDiarioDb(RegistroDiarioRepository repository, ModelMapper modelMapper) {
+		this.repository = repository;
+		this.modelMapper = modelMapper;
+	}
+
 	/**
 	 *
 	 */
@@ -38,7 +39,7 @@ public class RegistroDiarioDb implements RegistroDiarioPort {
 	public List<RegistroDiarioDTO> listAll() {
 		List<RegistroDiario> registros = repository.findAll();
 		return CollectionUtils.isNotEmpty(registros) ? registros.stream()
-				.map(registro -> modelMapper.map(registro, RegistroDiarioDTO.class)).collect(Collectors.toList())
+				.map(registro -> modelMapper.map(registro, RegistroDiarioDTO.class)).toList()
 				: Collections.emptyList();
 	}
 

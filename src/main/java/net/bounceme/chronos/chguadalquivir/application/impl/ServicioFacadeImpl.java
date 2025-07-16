@@ -25,9 +25,9 @@ public class ServicioFacadeImpl implements ServicioFacade {
 	private EmbalsePort embalsePort;
 
 	private ZonaPort zonaPort;
-	
+
 	private PuntoControlPort puntoControlPort;
-	
+
 	public ServicioFacadeImpl(RegistroDiarioPort registroDiarioPort, EmbalsePort embalsePort, ZonaPort zonaPort,
 			PuntoControlPort puntoControlPort) {
 		super();
@@ -50,11 +50,8 @@ public class ServicioFacadeImpl implements ServicioFacade {
 	 */
 	@Override
 	public void write(EmbalseDTO embalseDTO) {
-		embalsePort.getByCode(embalseDTO.getCodigo()).ifPresentOrElse((embalse) -> {
-			log.info("Embalse ya existe: {}", embalse.toString());
-		}, () -> {
-			embalsePort.write(embalseDTO);
-		});
+		embalsePort.getByCode(embalseDTO.getCodigo()).ifPresentOrElse(
+				embalse -> log.info("Embalse ya existe: {}", embalse.toString()), () -> embalsePort.write(embalseDTO));
 	}
 
 	/**
@@ -62,19 +59,14 @@ public class ServicioFacadeImpl implements ServicioFacade {
 	 */
 	@Override
 	public void write(ZonaDTO zonaDTO) {
-		zonaPort.getByCode(zonaDTO.getCodigo()).ifPresentOrElse((zona) -> {
-			log.info("Zona ya existe: {}", zona.toString());
-		}, () -> {
-			zonaPort.write(zonaDTO);
-		});
+		zonaPort.getByCode(zonaDTO.getCodigo()).ifPresentOrElse(zona -> log.info("Zona ya existe: {}", zona.toString()),
+				() -> zonaPort.write(zonaDTO));
 	}
 
 	@Override
 	public void write(PuntoControlDTO puntoControlDTO) {
-		puntoControlPort.getByCode(puntoControlDTO.getId()).ifPresentOrElse((puntoControl) -> {
-			log.info("Punto de control ya existe: {}", puntoControl.toString());
-		}, () -> {
-			puntoControlPort.write(puntoControlDTO);
-		});
+		puntoControlPort.getByCode(puntoControlDTO.getId()).ifPresentOrElse(
+				puntoControl -> log.info("Punto de control ya existe: {}", puntoControl.toString()),
+				() -> puntoControlPort.write(puntoControlDTO));
 	}
 }
