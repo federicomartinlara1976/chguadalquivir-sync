@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +23,15 @@ import net.bounceme.chronos.dto.chguadalquivir.ZonaDTO;
 @Slf4j
 public class ZonaDb implements ZonaPort {
 	
-	@Autowired
 	private ZonaRepository repository;
 	
-	@Autowired
 	private ModelMapper modelMapper;
+	
+	public ZonaDb(ZonaRepository repository, ModelMapper modelMapper) {
+		super();
+		this.repository = repository;
+		this.modelMapper = modelMapper;
+	}
 
 	/**
 	 *

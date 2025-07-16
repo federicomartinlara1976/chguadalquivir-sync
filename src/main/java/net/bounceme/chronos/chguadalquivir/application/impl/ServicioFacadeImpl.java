@@ -1,6 +1,5 @@
 package net.bounceme.chronos.chguadalquivir.application.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,19 +20,23 @@ import net.bounceme.chronos.dto.chguadalquivir.ZonaDTO;
 @Slf4j
 public class ServicioFacadeImpl implements ServicioFacade {
 
-	@Autowired
 	private RegistroDiarioPort registroDiarioPort;
 
-	@Autowired
 	private EmbalsePort embalsePort;
 
-	@Autowired
 	private ZonaPort zonaPort;
 	
-	@Autowired
 	private PuntoControlPort puntoControlPort;
-
 	
+	public ServicioFacadeImpl(RegistroDiarioPort registroDiarioPort, EmbalsePort embalsePort, ZonaPort zonaPort,
+			PuntoControlPort puntoControlPort) {
+		super();
+		this.registroDiarioPort = registroDiarioPort;
+		this.embalsePort = embalsePort;
+		this.zonaPort = zonaPort;
+		this.puntoControlPort = puntoControlPort;
+	}
+
 	/**
 	 *
 	 */
