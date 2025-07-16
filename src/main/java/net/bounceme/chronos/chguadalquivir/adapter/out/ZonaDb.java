@@ -3,7 +3,6 @@ package net.bounceme.chronos.chguadalquivir.adapter.out;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
