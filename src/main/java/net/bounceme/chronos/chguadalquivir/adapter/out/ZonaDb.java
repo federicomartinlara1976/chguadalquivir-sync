@@ -27,7 +27,6 @@ public class ZonaDb implements ZonaPort {
 	private ModelMapper modelMapper;
 	
 	public ZonaDb(ZonaRepository repository, ModelMapper modelMapper) {
-		super();
 		this.repository = repository;
 		this.modelMapper = modelMapper;
 	}
