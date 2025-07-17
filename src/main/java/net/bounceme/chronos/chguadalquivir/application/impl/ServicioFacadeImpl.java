@@ -51,7 +51,7 @@ public class ServicioFacadeImpl implements ServicioFacade {
 	@Override
 	public void write(EmbalseDTO embalseDTO) {
 		embalsePort.getByCode(embalseDTO.getCodigo()).ifPresentOrElse(
-				embalse -> log.info("Embalse ya existe: {}", embalse.toString()), () -> embalsePort.write(embalseDTO));
+				embalse -> log.info("Embalse ya existe: {}", embalse), () -> embalsePort.write(embalseDTO));
 	}
 
 	/**
@@ -59,14 +59,14 @@ public class ServicioFacadeImpl implements ServicioFacade {
 	 */
 	@Override
 	public void write(ZonaDTO zonaDTO) {
-		zonaPort.getByCode(zonaDTO.getCodigo()).ifPresentOrElse(zona -> log.info("Zona ya existe: {}", zona.toString()),
+		zonaPort.getByCode(zonaDTO.getCodigo()).ifPresentOrElse(zona -> log.info("Zona ya existe: {}", zona),
 				() -> zonaPort.write(zonaDTO));
 	}
 
 	@Override
 	public void write(PuntoControlDTO puntoControlDTO) {
 		puntoControlPort.getByCode(puntoControlDTO.getId()).ifPresentOrElse(
-				puntoControl -> log.info("Punto de control ya existe: {}", puntoControl.toString()),
+				puntoControl -> log.info("Punto de control ya existe: {}", puntoControl),
 				() -> puntoControlPort.write(puntoControlDTO));
 	}
 }
