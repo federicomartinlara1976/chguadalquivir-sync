@@ -1,10 +1,8 @@
 package net.bounceme.chronos.chguadalquivir.adapter.out;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +19,11 @@ import net.bounceme.chronos.dto.chguadalquivir.ZonaDTO;
 @Service
 @Slf4j
 public class ZonaDb implements ZonaPort {
-	
+
 	private ZonaRepository repository;
-	
+
 	private ModelMapper modelMapper;
-	
+
 	public ZonaDb(ZonaRepository repository, ModelMapper modelMapper) {
 		this.repository = repository;
 		this.modelMapper = modelMapper;
@@ -37,10 +35,7 @@ public class ZonaDb implements ZonaPort {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ZonaDTO> listAll() {
-		List<Zona> zonas = repository.findAll();
-		return CollectionUtils.isNotEmpty(zonas) ? zonas.stream()
-				.map(zona -> modelMapper.map(zona, ZonaDTO.class)).toList()
-				: Collections.emptyList();
+		return repository.findAll().stream().map(zona -> modelMapper.map(zona, ZonaDTO.class)).toList();
 	}
 
 	/**
@@ -49,9 +44,7 @@ public class ZonaDb implements ZonaPort {
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<ZonaDTO> getByCode(String code) {
-		return Optional.ofNullable(repository.findById(code)
-                .map(zona -> modelMapper.map(zona, ZonaDTO.class))
-                .orElse(null));
+		return repository.findById(code).map(zona -> modelMapper.map(zona, ZonaDTO.class));
 	}
 
 	/**
@@ -61,8 +54,7 @@ public class ZonaDb implements ZonaPort {
 	@Transactional
 	public ZonaDTO write(ZonaDTO zonaJpaDTO) {
 		Zona zona = repository.save(modelMapper.map(zonaJpaDTO, Zona.class));
-		
-		log.info("Writed: {}", zona.toString());
+		log.info("Writed: {}", zona);
 		return modelMapper.map(zona, ZonaDTO.class);
 	}
 

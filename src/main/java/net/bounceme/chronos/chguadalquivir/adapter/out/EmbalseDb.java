@@ -1,10 +1,8 @@
 package net.bounceme.chronos.chguadalquivir.adapter.out;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,10 +35,7 @@ public class EmbalseDb implements EmbalsePort {
 	@Override
 	@Transactional(readOnly = true)
 	public List<EmbalseDTO> listAll() {
-		List<Embalse> embalses = repository.findAll();
-		return CollectionUtils.isNotEmpty(embalses) ? embalses.stream()
-				.map(embalse -> modelMapper.map(embalse, EmbalseDTO.class)).toList()
-				: Collections.emptyList();
+		return repository.findAll().stream().map(embalse -> modelMapper.map(embalse, EmbalseDTO.class)).toList();
 	}
 
 	/**
@@ -49,8 +44,7 @@ public class EmbalseDb implements EmbalsePort {
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<EmbalseDTO> getByCode(String code) {
-		return Optional
-				.ofNullable(repository.findById(code).map(embalse -> modelMapper.map(embalse, EmbalseDTO.class)).orElse(null));
+		return repository.findById(code).map(embalse -> modelMapper.map(embalse, EmbalseDTO.class));
 	}
 
 	/**
@@ -60,7 +54,6 @@ public class EmbalseDb implements EmbalsePort {
 	@Transactional
 	public EmbalseDTO write(EmbalseDTO embalseDTO) {
 		Embalse embalse = repository.save(modelMapper.map(embalseDTO, Embalse.class));
-
 		log.info("Writed: {}", embalse.toString());
 		return modelMapper.map(embalse, EmbalseDTO.class);
 	}
