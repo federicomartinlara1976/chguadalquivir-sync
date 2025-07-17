@@ -1,5 +1,5 @@
 # Usa una imagen base con Java (versión compatible con tu Spring Boot)
-FROM eclipse-temurin:17-jdk-jammy
+FROM eclipse-temurin:21-jdk-jammy
 
 # Directorio de trabajo en el contenedor
 WORKDIR /app
