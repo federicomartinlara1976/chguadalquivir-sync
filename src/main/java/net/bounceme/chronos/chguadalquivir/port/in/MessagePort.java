@@ -1,6 +1,6 @@
 package net.bounceme.chronos.chguadalquivir.port.in;
 
-import net.bounceme.chronos.dto.MessageDTO;
+import net.bounceme.chronos.dto.chguadalquivir.CHGuadalquivirMessageDTO;
 
 public interface MessagePort {
 
@@ -9,6 +9,6 @@ public interface MessagePort {
 	 * 
 	 * @param message
 	 */
-	void receive(MessageDTO<?> message);
+	void receive(CHGuadalquivirMessageDTO<?> message);
 
 }

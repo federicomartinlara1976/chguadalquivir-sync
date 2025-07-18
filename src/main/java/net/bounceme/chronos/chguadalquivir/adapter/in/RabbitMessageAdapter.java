@@ -8,8 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.chguadalquivir.application.ServicioFacade;
 import net.bounceme.chronos.chguadalquivir.port.in.MessagePort;
-import net.bounceme.chronos.dto.MessageDTO;
+import net.bounceme.chronos.dto.chguadalquivir.CHGuadalquivirMessageDTO;
 import net.bounceme.chronos.dto.chguadalquivir.EmbalseDTO;
+import net.bounceme.chronos.dto.chguadalquivir.MessageType;
 import net.bounceme.chronos.dto.chguadalquivir.PuntoControlDTO;
 import net.bounceme.chronos.dto.chguadalquivir.RegistroDiarioDTO;
 import net.bounceme.chronos.dto.chguadalquivir.ZonaDTO;
@@ -24,12 +25,6 @@ import net.bounceme.chronos.dto.chguadalquivir.ZonaDTO;
 @Service
 @Slf4j
 public class RabbitMessageAdapter implements MessagePort {
-
-	// Definir constantes para los nombres de clase (opcional pero recomendado)
-	private static final String REGISTRO_DIARIO = "RegistroDiarioDTO";
-	private static final String EMBALSE = "EmbalseDTO";
-	private static final String ZONA = "ZonaDTO";
-	private static final String PUNTO_CONTROL = "PuntoControlDTO";
 
 	private ServicioFacade servicioFacade;
 
@@ -47,18 +42,19 @@ public class RabbitMessageAdapter implements MessagePort {
 	 */
 	@Override
 	@RabbitListener(queues = "CHGEventos")
-	public void receive(MessageDTO<?> message) {
+	public void receive(CHGuadalquivirMessageDTO<?> message) {
 		final String className = message.getClassName();
+		final MessageType messageType = message.getMessageType();
 	    final Object data = message.getData();
 
-	    switch (className) {
-	        case String s when s.contains(REGISTRO_DIARIO) -> 
+	    switch (messageType) {
+	        case REGISTRO_DIARIO -> 
 	            servicioFacade.write(objectMapper.convertValue(data, RegistroDiarioDTO.class));
-	        case String s when s.contains(EMBALSE) -> 
+	        case EMBALSE -> 
 	            servicioFacade.write(objectMapper.convertValue(data, EmbalseDTO.class));
-	        case String s when s.contains(ZONA) -> 
+	        case ZONA -> 
 	            servicioFacade.write(objectMapper.convertValue(data, ZonaDTO.class));
-	        case String s when s.contains(PUNTO_CONTROL) -> 
+	        case PUNTO_CONTROL -> 
 	            servicioFacade.write(objectMapper.convertValue(data, PuntoControlDTO.class));
 	        default -> log.warn("Tipo desconocido {}", className);
 	    }
